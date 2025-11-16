@@ -1,71 +1,85 @@
-Sentiment Analysis with Transformers 🧠💬
+# Sentiment Analysis with Transformers 🧠💬
 
-A simple, end-to-end Sentiment Analysis project built using PyTorch, HuggingFace Transformers, and the Datasets library.
+A simple, end-to-end **Sentiment Analysis** project built using **PyTorch**, **HuggingFace Transformers**, and the **Datasets** library.
 This project trains a text classification model on custom data and evaluates its performance, with support for inference using HuggingFace pipelines.
 
-🚀 Features
+---
 
-Load and preprocess datasets using 🤗 datasets
+## 🚀 Features
 
-Tokenize text using pretrained Transformer tokenizers
+* Load and preprocess datasets using 🤗 *datasets*
+* Tokenize text using pretrained Transformer tokenizers
+* Fine-tune a state-of-the-art model (BERT/RoBERTa/DistilBERT, etc.)
+* Train using HuggingFace `Trainer`
+* Evaluate and visualize performance
+* Run predictions using a simple inference wrapper
 
-Fine-tune a state-of-the-art model (BERT/RoBERTa/DistilBERT, etc.)
+---
 
-Train using HuggingFace Trainer
+## 🛠️ Tech Stack
 
-Evaluate and visualize performance
+* **Python 3**
+* **PyTorch**
+* **Transformers (HuggingFace)**
+* **Datasets (HuggingFace)**
+* **scikit-learn**
+* **pandas, numpy**
 
-Run predictions using a simple inference wrapper
+---
 
-🛠️ Tech Stack
+## 📂 Project Structure
 
-Python 3
-
-PyTorch
-
-Transformers (HuggingFace)
-
-Datasets (HuggingFace)
-
-scikit-learn
-
-pandas, numpy
-
-📂 Project Structure
+```
 Sentiment_Analysis/
 │
-├── notebook.ipynb      # Your main training notebook
+├── notebook.ipynb      # Main training notebook
 ├── data/               # (Optional) Training dataset
 ├── models/             # Saved models/checkpoints
-├── README.md           # You are here
-└── requirements.txt    # Dependencies list
+├── README.md           # Project documentation
+└── requirements.txt    # Dependency list
+```
 
-🔧 Setup Instructions
-1️⃣ Install Dependencies
+---
+
+## 🔧 Setup Instructions
+
+### 1️⃣ Install Dependencies
+
+```bash
 pip install torch transformers datasets scikit-learn pandas numpy
+```
 
-2️⃣ Verify GPU (optional but recommended)
+### 2️⃣ Verify GPU Availability
+
+```python
 import torch
 print(torch.cuda.is_available())
+```
 
-🏋️ Training the Model
+---
 
-The training script (inside the notebook) does the following:
+## 🏋️ Training the Model
 
-✔ Load and split dataset
+### ✔ Load and split dataset
 
-Using train-test split from scikit-learn.
+### ✔ Tokenize text
 
-✔ Tokenize text
+```python
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
+```
 
-✔ Load model
+### ✔ Load model
+
+```python
 model = AutoModelForSequenceClassification.from_pretrained(
     "bert-base-uncased",
     num_labels=2
 )
+```
 
-✔ Define training configuration
+### ✔ Define training configuration
+
+```python
 training_args = TrainingArguments(
     output_dir="model_output",
     evaluation_strategy="epoch",
@@ -74,8 +88,11 @@ training_args = TrainingArguments(
     per_device_eval_batch_size=8,
     num_train_epochs=3
 )
+```
 
-✔ Train using Trainer
+### ✔ Train using Trainer
+
+```python
 trainer = Trainer(
     model=model,
     args=training_args,
@@ -85,48 +102,48 @@ trainer = Trainer(
 )
 
 trainer.train()
+```
 
-📊 Evaluation
+---
 
-After training:
+## 📊 Evaluation
 
+```python
 metrics = trainer.evaluate()
 print(metrics)
+```
 
+Outputs include:
 
-You get:
+* Accuracy
+* Precision / Recall / F1
+* Loss curves
 
-Accuracy
+---
 
-Precision/recall/F1
+## 🔮 Running Inference
 
-Loss curves (if plotted)
-
-🔮 Running Inference
+```python
 from transformers import pipeline
 
 pipe = pipeline("sentiment-analysis", model="model_output")
 
 pipe("This product is amazing!")
+```
 
-📦 Model Export
+---
 
-Fine-tuned model is automatically stored under:
+## 📦 Model Export
 
+Fine-tuned model is saved automatically under:
+
+```
 model_output/
+```
 
+---
 
-You can push it to HuggingFace Hub if needed.
+## ❤️ Author
 
-📝 Notes
-
-Works with any binary sentiment dataset.
-
-GPU gives a massive speed boost.
-
-You can switch models by replacing "bert-base-uncased" with anything else (e.g., "distilbert-base-uncased").
-
-❤️ Author
-
-Nayan Kshitij
-Cybersecurity + AI enthusiast building cool ML stuff.
+**Nayan Kshitij**
+Cybersecurity & AI Enthusiast
